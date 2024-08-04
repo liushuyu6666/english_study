@@ -24,7 +24,7 @@ This application uses MongoDB. Follow these steps to set it up:
    3. Create a database named `english_study` if it does not already exist, and set up the default collection named `sentences`.
    4. Obtain the connection string for the Python project. The format should be:
    ```shell
-   MONGO_URI=mongodb+srv://<your_username>:<your_password>@english.xxxxxx.mongodb.net/english_study?retryWrites=true&w=majority&appName=English
+   MONGO_URI=mongodb+srv://<your_username>:<your_password>@english.xxxxxx.mongodb.net/english_study?retryWrites=true&w=majority&appName=english_study
    ```
    5. Ensure the `<default_database_name>` is `english_study`.
    6. Run the following command to initialize the english_study database and the sentences collection:
