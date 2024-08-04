@@ -33,7 +33,7 @@ def create():
 def get_english():
     try:
         db = get_db()
-        entries = list(db.English.find())
+        entries = list(db[collection_name].find())
         for entry in entries:
             entry["_id"] = str(entry["_id"])
             entry["timestamp"] = entry["timestamp"].isoformat()
