@@ -1,6 +1,8 @@
 import click
 from flask import current_app, g
 from pymongo import MongoClient
+from .config import config
+
 
 sentence_collection_name = "sentences"
 counters_collection_name = "counters"
@@ -8,7 +10,7 @@ counters_collection_name = "counters"
 
 def get_db():
     if 'db' not in g:
-        g.client = MongoClient(current_app.config['MONGO_URI'])
+        g.client = MongoClient(config.mongo_uri)
         g.db = g.client.get_database()
     return g.db
 
@@ -30,6 +32,12 @@ def init_db_command():
     click.echo('MongoDB setup completed.')
 
 
+@click.command('retrieve-mongo-uri')
+def retrieve_mongo_uri():
+    click.echo('MongoDB URI is ' + config.mongo_uri)
+
+
+
 def close_db(e=None):
     client = g.pop('client', None)
 
@@ -40,6 +48,7 @@ def close_db(e=None):
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+    app.cli.add_command(retrieve_mongo_uri)
 
 
 def get_next_sequence_value(sequence_name):

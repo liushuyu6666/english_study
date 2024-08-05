@@ -1,15 +1,14 @@
 import os
-
 from flask import Flask
-from dotenv import load_dotenv
-
-load_dotenv()
+from .config import config
 
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object('src.config.Config')
+
+    # Load configuration from Config class
+    app.config['MONGO_URI'] = config.mongo_uri
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -23,11 +22,6 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
 
     from . import db
     db.init_app(app)
